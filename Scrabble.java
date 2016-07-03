@@ -8,6 +8,8 @@ public class Scrabble {
 		Dictionary dict = new Dictionary();
 		
 		dict.find("abasing");
+		
+		dict.printStatistics();
 	}
 
 }

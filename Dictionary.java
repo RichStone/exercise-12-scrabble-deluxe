@@ -110,6 +110,25 @@ public class Dictionary {
 		System.out.println("\nNumber of buckets: " + hashTable.length);
 		
 		//the biggest bucket
+		//and empty buckets
+		int biggest = 0;
+		int emptyBuckets = 0;
+		int allItems = hashTable.length;
+		for(int i = 0; i < hashTable.length; i++) {
+			if(hashTable[i] == null) {
+				emptyBuckets++;
+				continue;
+			}
+			
+			if(hashTable[i].getSize() > biggest) {
+				biggest = hashTable[i].getSize();
+			}
+		}
+		System.out.println("All items: " + allItems);
+		double average = (double)((double)(allItems) / (hashTable.length - emptyBuckets));
+		System.out.println("The biggest bucket counts: " + biggest + " items.");
+		System.out.println("There are: " + emptyBuckets + " empty buckets");
+		System.out.println("On average there are " + average + " per bucket.");
 	}
 	
 	public String normalize(String wordToNormalize) {
