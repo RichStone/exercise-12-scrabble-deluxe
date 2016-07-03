@@ -7,9 +7,9 @@ public class Scrabble {
 	public static void main(String[] args) throws IOException {
 		Dictionary dict = new Dictionary();
 		
-		dict.find("abasing");
-		
 		dict.printStatistics();
+		
+		dict.find("tingseas");
 	}
 
 }

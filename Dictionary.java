@@ -85,13 +85,28 @@ public class Dictionary {
 	
 	public String[] find(String wordToFind) {
 		
+		System.out.println("\nYou look for permutations of: " + wordToFind);
+		
 		int wordHashKey = stringHashFunction(wordToFind);
 		
-		int bucketSize = hashTable[wordHashKey].getSize();
+		int bucketSize = 0;
+		String [] arrayOfPermutations = null;
 		
-		String [] arrayOfPermutations = new String[bucketSize];
+		if(hashTable[wordHashKey] != null) {
+			bucketSize = hashTable[wordHashKey].getSize();
+			arrayOfPermutations = new String[bucketSize];
+		}
+		else {
+			System.out.println("There are no words for your permutation!");
+			return arrayOfPermutations;
+		}
 		
+		
+		
+		
+		System.out.println("The cheater found the following words: ");
 		hashTable[wordHashKey].printWords();
+
 		
 		Iterator <String> it = hashTable[wordHashKey].getList().iterator();
 		int index = 0;

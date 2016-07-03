@@ -17,13 +17,15 @@ public class WordBucket {
 	}
 	
 	public void printWords() {
-		
 		for(String word : wordList) {
 			System.out.println(word);
 		}
 	}
 	
 	public int getSize() {
+		if(wordList == null) {
+			return 0;
+		}
 		return wordList.size();
 	}
 	
