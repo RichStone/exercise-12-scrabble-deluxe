@@ -3,6 +3,7 @@ package my;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -13,24 +14,22 @@ public class Dictionary {
 	
 	private WordBucket[] hashTable;
 	
-	public Dictionary() throws IOException {
-		readWords();
+	public Dictionary(String filePath) throws IOException {
+		readWords(filePath);
 		
 		//now as we know the number of words we can initialize our WordBucket
 		hashTable = new WordBucket[startWordList.size()];
 		
 		listToHashTable(startWordList);
-		
-		printDictionary();
 	}
 	
 	/**
 	 * read words from file into hashlist
 	 * @throws IOException
 	 */
-	public void readWords() throws IOException {
+	public void readWords(String filePath) throws IOException {
 		
-		File fileWithWords = new File("/Users/Rich/Google Drive/Studium/INFO 2/week-26/dict.txt");
+		File fileWithWords = new File(filePath);
 		Scanner input = new Scanner(fileWithWords);
 			
 		while(input.hasNext()) {
@@ -51,7 +50,7 @@ public class Dictionary {
 			int charCode = wordToHash.charAt(i) - 96;
 			
 			//calculate the hash key using the 26 letters
-			hashKeyValue = (hashKeyValue * 26 + charCode) % hashTable.length;
+			hashKeyValue = (hashKeyValue * 31 + charCode) % hashTable.length;
 		}
 		
 		return hashKeyValue;
@@ -85,11 +84,10 @@ public class Dictionary {
 	
 	public String[] find(String wordToFind) {
 		
-		System.out.println("\nYou look for permutations of: " + wordToFind);
-		
 		int wordHashKey = stringHashFunction(wordToFind);
 		
 		int bucketSize = 0;
+		
 		String [] arrayOfPermutations = null;
 		
 		if(hashTable[wordHashKey] != null) {
@@ -97,16 +95,8 @@ public class Dictionary {
 			arrayOfPermutations = new String[bucketSize];
 		}
 		else {
-			System.out.println("There are no words for your permutation!");
 			return arrayOfPermutations;
 		}
-		
-		
-		
-		
-		System.out.println("The cheater found the following words: ");
-		hashTable[wordHashKey].printWords();
-
 		
 		Iterator <String> it = hashTable[wordHashKey].getList().iterator();
 		int index = 0;
@@ -145,6 +135,36 @@ public class Dictionary {
 		System.out.println("There are: " + emptyBuckets + " empty buckets");
 		System.out.println("On average there are " + average + " per bucket.");
 	}
+	
+	public void printPermutations(String stringToCompare) {
+		
+		String normalizedStringToCompare = normalize(stringToCompare);
+		
+		String[] bucketWithAllPerms = find(stringToCompare);
+		
+		System.out.println("\nThose are the possible words of your String " + "\"" + stringToCompare+ "\"");
+		
+		if(bucketWithAllPerms == null) {
+			return;
+		}
+		
+		for(int i = 0; i < bucketWithAllPerms.length; i++) {
+			if(normalize(bucketWithAllPerms[i]).equals(normalizedStringToCompare)) {
+				System.out.println("- " + bucketWithAllPerms[i]);
+			}
+		}
+	}
+	
+	public boolean isPermutation(String w1, String w2){
+	     boolean permutation=false;
+	      String p1 = normalize(w1);
+	      String p2 = normalize(w2);
+	      if (p1==p2){
+	       permutation = true;
+	      }
+	     return permutation;
+	    }
+	
 	
 	public String normalize(String wordToNormalize) {
 		wordToNormalize.toLowerCase();
