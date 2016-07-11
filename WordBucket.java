@@ -1,7 +1,7 @@
 package my;
 
 import java.util.LinkedList;
-
+//
 public class WordBucket {
 	
 	private LinkedList<String> wordList;

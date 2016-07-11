@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
-
+//
 public class Scrabble {
 	
 	private HashSet<String> normalizedPermutations = new HashSet<String>();
